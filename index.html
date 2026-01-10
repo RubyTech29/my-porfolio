@@ -4,635 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #050505;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 25px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        nav.scrolled {
-            padding: 18px 60px;
-            background: rgba(5, 5, 5, 0.85);
-            border-bottom: 1px solid rgba(255, 100, 200, 0.2);
-        }
-
-        .logo {
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: -2px;
-            color: #fff;
-            position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, #ff6ec4, #7873f5);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 45px;
-        }
-
-        nav ul li a {
-            color: #aaa;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            color: #fff;
-        }
-
-        nav ul li a::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #ff6ec4;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        nav ul li a:hover::before {
-            opacity: 1;
-        }
-
-        section {
-            min-height: 100vh;
-            padding: 120px 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .home-content {
-            text-align: left;
-            max-width: 900px;
-            opacity: 0;
-            animation: slideIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .home-content .label {
-            display: inline-block;
-            padding: 8px 20px;
-            background: rgba(255, 110, 196, 0.1);
-            border: 1px solid rgba(255, 110, 196, 0.3);
-            border-radius: 30px;
-            font-size: 13px;
-            letter-spacing: 1px;
-            color: #ff6ec4;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        .home-content h1 {
-            font-size: 72px;
-            margin-bottom: 25px;
-            line-height: 1.1;
-            font-weight: 800;
-            letter-spacing: -3px;
-        }
-
-        .home-content h1 .gradient-text {
-            background: linear-gradient(135deg, #ff6ec4 0%, #7873f5 50%, #00d4ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-
-        .home-content h2 {
-            font-size: 28px;
-            color: #999;
-            margin-bottom: 35px;
-            font-weight: 400;
-            letter-spacing: -0.5px;
-        }
-
-        .home-content p {
-            font-size: 17px;
-            color: #777;
-            max-width: 650px;
-            line-height: 1.8;
-            margin-bottom: 45px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .cta-button {
-            padding: 16px 36px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 15px;
-            letter-spacing: 0.3px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button.primary {
-            background: linear-gradient(135deg, #ff6ec4, #7873f5);
-            color: #fff;
-            box-shadow: 0 8px 25px rgba(255, 110, 196, 0.3);
-        }
-
-        .cta-button.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(255, 110, 196, 0.4);
-        }
-
-        .cta-button.secondary {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .cta-button.secondary:hover {
-            border-color: #ff6ec4;
-            background: rgba(255, 110, 196, 0.05);
-        }
-
-        .services-content {
-            max-width: 1300px;
-            width: 100%;
-        }
-
-        .services-content h2 {
-            font-size: 52px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
-        }
-
-        .services-content .subtitle {
-            color: #777;
-            font-size: 18px;
-            margin-bottom: 70px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        .service-card {
-            background: linear-gradient(145deg, rgba(20, 20, 25, 0.6), rgba(15, 15, 20, 0.4));
-            padding: 45px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: scale(0.95);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 110, 196, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .service-card:hover::before {
-            left: 100%;
-        }
-
-        .service-card.animate {
-            animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes scaleIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .service-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 110, 196, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .service-number {
-            font-size: 14px;
-            color: #ff6ec4;
-            font-weight: 700;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-        }
-
-        .service-card h3 {
-            font-size: 26px;
-            margin-bottom: 18px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .service-card p {
-            color: #888;
-            line-height: 1.7;
-            font-size: 15px;
-        }
-
-        .about-content {
-            max-width: 1300px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: 52px;
-            font-weight: 800;
-            margin-bottom: 30px;
-            letter-spacing: -2px;
-        }
-
-        .about-text p {
-            color: #888;
-            line-height: 1.9;
-            margin-bottom: 25px;
-            font-size: 16px;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin: 50px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 25px;
-            background: rgba(255, 110, 196, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 110, 196, 0.1);
-        }
-
-        .stat-number {
-            font-size: 42px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff6ec4, #7873f5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            color: #888;
-            font-size: 13px;
-            letter-spacing: 1px;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .skill-tag {
-            padding: 10px 22px;
-            background: rgba(120, 115, 245, 0.1);
-            border: 1px solid rgba(120, 115, 245, 0.3);
-            border-radius: 8px;
-            color: #7873f5;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: rgba(120, 115, 245, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .about-visual {
-            position: relative;
-            height: 550px;
-        }
-
-        .floating-card {
-            position: absolute;
-            background: linear-gradient(145deg, rgba(30, 30, 35, 0.8), rgba(20, 20, 25, 0.6));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            animation: floatCard 6s ease-in-out infinite;
-        }
-
-        .floating-card:nth-child(1) {
-            top: 0;
-            left: 0;
-            width: 280px;
-            animation-delay: 0s;
-        }
-
-        .floating-card:nth-child(2) {
-            top: 100px;
-            right: 0;
-            width: 250px;
-            animation-delay: 2s;
-        }
-
-        .floating-card:nth-child(3) {
-            bottom: 50px;
-            left: 50px;
-            width: 260px;
-            animation-delay: 4s;
-        }
-
-        @keyframes floatCard {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .card-icon {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .card-desc {
-            font-size: 13px;
-            color: #888;
-        }
-
-        .contact-content {
-            max-width: 900px;
-            width: 100%;
-        }
-
-        .contact-content h2 {
-            font-size: 52px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
-        }
-
-        .contact-content .subtitle {
-            color: #777;
-            margin-bottom: 50px;
-            font-size: 18px;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 18px 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: #ff6ec4;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .contact-form textarea {
-            min-height: 160px;
-            resize: vertical;
-        }
-
-        .contact-form button {
-            padding: 18px 40px;
-            background: linear-gradient(135deg, #ff6ec4, #7873f5);
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .contact-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(255, 110, 196, 0.4);
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .info-item {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .info-item:hover {
-            border-color: rgba(255, 110, 196, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .info-icon {
-            font-size: 24px;
-            margin-bottom: 12px;
-        }
-
-        .info-label {
-            font-size: 12px;
-            color: #888;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .info-value {
-            font-size: 16px;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 20px 30px;
-            }
-
-            nav ul {
-                gap: 25px;
-            }
-
-            section {
-                padding: 100px 30px;
-            }
-
-            .home-content h1 {
-                font-size: 48px;
-            }
-
-            .about-content,
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style2.css">
+    
 </head>
 <body>
-    <canvas id="bg-canvas"></canvas>
+    <canvas id="particles"></canvas>
 
     <nav id="navbar">
-        <div class="logo">QUANTUM</div>
+        <div class="logo">MET0</div>
         <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
     <section id="home">
         <div class="home-content">
-            <span class="label">AVAILABLE FOR FREELANCE</span>
-            <h1>Crafting <span class="gradient-text">Digital Excellence</span></h1>
-            <h2>Full Stack Developer & Creative Technologist</h2>
-            <p>I transform complex ideas into elegant digital solutions. With a focus on performance, user experience, and cutting-edge technologies, I build products that make a difference.</p>
-            <div class="cta-buttons">
-                <a href="#contact" class="cta-button primary">Start a Project</a>
-                <a href="#about" class="cta-button secondary">Learn More</a>
-            </div>
+            <h1>Full Stack Developer</h1>
+            <h2>TALEAT MARVELLOUS TEMITOPE</h2>
+            <p>I create exceptional digital experiences that combine beautiful designs with powerful functionality,  focusing on performance, user experience, and cutting-edge technologie. Let's bring your ideas to life.</p>
+            <a href="#contact" class="cta-button">CONTACT METO</a>
         </div>
     </section>
 
     <section id="services">
         <div class="services-content">
-            <h2>Services & Expertise</h2>
-            <p class="subtitle">Comprehensive solutions for modern digital challenges</p>
+            <h2>What I Do</h2>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-number">01</div>
-                    <h3>Full Stack Development</h3>
-                    <p>End-to-end application development using modern frameworks and architectures. From concept to deployment, I handle every aspect of your project.</p>
+                    <div class="service-icon icon-img"> <img src="./laptop-removebg-preview.png" alt="" width="130%"></div>
+                    <h3>Web Development</h3>
+                    <p>Creating responsive and performant web applications using modern frameworks and best practices.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-number">02</div>
-                    <h3>UI/UX Engineering</h3>
-                    <p>Creating pixel-perfect interfaces with seamless interactions. I blend design thinking with technical execution for superior user experiences.</p>
+                    <div class="service-icon icon-img"><img src="./rishabh-malhotra-83ypHTv6J2M-unsplash-removebg-preview.png" alt="" width="70%"></div>
+                    <h3>Mobile Development</h3>
+                    <p>Building cross-platform mobile applications that deliver native-like experiences.</p>
                 </div>
+               
                 <div class="service-card">
-                    <div class="service-number">03</div>
-                    <h3>Cloud Architecture</h3>
-                    <p>Scalable, secure cloud solutions optimized for performance. Leveraging AWS, Azure, and modern DevOps practices.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-number">04</div>
-                    <h3>API Development</h3>
-                    <p>Robust RESTful and GraphQL APIs designed for scalability and security. Documentation-first approach for seamless integration.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-number">05</div>
+                    <div class="service-icon">⚡</div>
                     <h3>Performance Optimization</h3>
-                    <p>Making your applications lightning-fast. Code optimization, caching strategies, and performance monitoring.</p>
+                    <p>Optimizing applications for speed, efficiency, and scalability.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-number">06</div>
-                    <h3>Technical Consulting</h3>
-                    <p>Strategic guidance for your tech decisions. Architecture reviews, tech stack selection, and best practices implementation.</p>
+                    <div class="service-icon">🔧</div>
+                    <h3>API Development</h3>
+                    <p>Creating robust and secure RESTful APIs for seamless data integration.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Deploying and managing applications on cloud platforms for maximum reliability.</p>
                 </div>
             </div>
         </div>
@@ -642,191 +68,108 @@
         <div class="about-content">
             <div class="about-text">
                 <h2>About Me</h2>
-                <p>I'm a full stack developer with a passion for creating exceptional digital experiences. My journey in technology spans over 6 years, during which I've worked with startups and enterprises alike.</p>
-                <p>I believe in writing clean, maintainable code and staying at the forefront of technological innovation. My approach combines technical expertise with a deep understanding of business goals.</p>
-                
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number">6+</div>
-                        <div class="stat-label">YEARS EXPERIENCE</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100+</div>
-                        <div class="stat-label">PROJECTS COMPLETED</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">HAPPY CLIENTS</div>
-                    </div>
-                </div>
-
+                <p>I'm a passionate developer with over 3 years of experience in creating innovative digital solutions. My journey in technology started with a curiosity for how things work, and it has evolved into a career dedicated to building exceptional user experiences.</p>
+                <p>I specialize in full-stack development, working with technologies to build scalable and maintainable applications. My approach combines technical expertise with creative problem-solving to deliver solutions that beats expectations.</p>
+                <p>When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community.</p>
                 <div class="skills">
+                    <span class="skill-tag">JavaScript</span>
                     <span class="skill-tag">React</span>
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">TypeScript</span>
                     <span class="skill-tag">Python</span>
-                    <span class="skill-tag">PostgreSQL</span>
-                    <span class="skill-tag">MongoDB</span>
-                    <span class="skill-tag">AWS</span>
-                    <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">Kubernetes</span>
-                    <span class="skill-tag">GraphQL</span>
+                    <span class="skill-tag">PHP</span>
+                    <span class="skill-tag">Git</span>
                 </div>
             </div>
-            <div class="about-visual">
-                <div class="floating-card">
-                    <div class="card-icon">🚀</div>
-                    <div class="card-title">Fast Performance</div>
-                    <div class="card-desc">Optimized code for lightning-speed applications</div>
-                </div>
-                <div class="floating-card">
-                    <div class="card-icon">🎨</div>
-                    <div class="card-title">Clean Design</div>
-                    <div class="card-desc">Beautiful interfaces that users love</div>
-                </div>
-                <div class="floating-card">
-                    <div class="card-icon">🔒</div>
-                    <div class="card-title">Secure Solutions</div>
-                    <div class="card-desc">Enterprise-grade security practices</div>
-                </div>
-            </div>
+            <div class="about-image"></div>
         </div>
     </section>
 
     <section id="contact">
         <div class="contact-content">
             <h2>Let's Work Together</h2>
-            <p class="subtitle">Have a project in mind? I'd love to hear about it.</p>
-            <div class="contact-grid">
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Tell me about your project" required></textarea>
-                    <button type="submit">Send Message</button>
-                </form>
-                <div class="contact-info">
-                    <div class="info-item">
-                        <div class="info-icon">📧</div>
-                        <div class="info-label">EMAIL</div>
-                        <div class="info-value">hello@quantum.dev</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">📱</div>
-                        <div class="info-label">PHONE</div>
-                        <div class="info-value">+1 (555) 123-4567</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">📍</div>
-                        <div class="info-label">LOCATION</div>
-                        <div class="info-value">San Francisco, CA</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">🌐</div>
-                        <div class="info-label">SOCIAL</div>
-                        <div class="info-value">GitHub • LinkedIn • Twitter</div>
-                    </div>
+            <p>You've get a project in mind? An idea? I'd love to hear about it. Send me a message and let's create something innovative and captivating together.</p>
+            <form class="contact-form" action="https://formspree.io/f/mzddpjbk" method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
                 </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Your Message" name="message" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+            <div class="social-links">
+                <a href="#"> <img src="./github-removebg-preview.png" alt="" width="100%" style="background:white ;"> GitHub</a>
+                <a href="#"><img src="./linedIn-removebg-preview.png" alt="" style="background:white ;"> LinkedIn</a>
+                <a href="#"><img src="./twitter-removebg-preview.png" alt="" style="background:white ;"> Twitter</a>
+                <a href="#"><img src="./Gmail-icon-removebg-preview.png" alt=""> Email</a>
             </div>
         </div>
     </section>
 
     <script>
-        const canvas = document.getElementById('bg-canvas');
+        // Particle Animation
+        const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const waves = [];
-        const waveCount = 5;
-        let time = 0;
+        const particles = [];
+        const particleCount = 100;
 
-        class Wave {
-            constructor(index) {
-                this.index = index;
-                this.amplitude = 50 + index * 20;
-                this.wavelength = 0.003 - index * 0.0003;
-                this.speed = 0.01 + index * 0.002;
-                this.opacity = 0.15 - index * 0.02;
-                this.yOffset = canvas.height / 2 + index * 40;
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
             }
 
-            draw(time) {
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(79, 172, 254, 0.5)';
                 ctx.beginPath();
-                ctx.moveTo(0, canvas.height);
-
-                for (let x = 0; x < canvas.width; x++) {
-                    const y = Math.sin((x * this.wavelength) + (time * this.speed)) * this.amplitude + this.yOffset;
-                    ctx.lineTo(x, y);
-                }
-
-                ctx.lineTo(canvas.width, canvas.height);
-                ctx.closePath();
-
-                const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                gradient.addColorStop(0, `rgba(255, 110, 196, ${this.opacity * 0.3})`);
-                gradient.addColorStop(0.5, `rgba(120, 115, 245, ${this.opacity * 0.5})`);
-                gradient.addColorStop(1, `rgba(0, 212, 255, ${this.opacity})`);
-
-                ctx.fillStyle = gradient;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        for (let i = 0; i < waveCount; i++) {
-            waves.push(new Wave(i));
-        }
-
-        const gridSize = 50;
-        const gridDots = [];
-
-        for (let x = 0; x < canvas.width; x += gridSize) {
-            for (let y = 0; y < canvas.height; y += gridSize) {
-                gridDots.push({ x, y, baseY: y, speed: Math.random() * 0.5 + 0.5 });
-            }
-        }
-
-        function drawGrid(time) {
-            ctx.strokeStyle = 'rgba(255, 110, 196, 0.05)';
-            ctx.lineWidth = 1;
-
-            gridDots.forEach((dot, i) => {
-                const offset = Math.sin(time * 0.001 * dot.speed + i * 0.1) * 10;
-                dot.y = dot.baseY + offset;
-
-                ctx.fillStyle = 'rgba(255, 110, 196, 0.2)';
-                ctx.fillRect(dot.x - 1, dot.y - 1, 2, 2);
-
-                if (i % Math.floor(canvas.width / gridSize) !== 0) {
-                    const nextDot = gridDots[i - 1];
-                    if (nextDot) {
-                        ctx.beginPath();
-                        ctx.moveTo(dot.x, dot.y);
-                        ctx.lineTo(nextDot.x, nextDot.y);
-                        ctx.stroke();
-                    }
-                }
-
-                if (i >= Math.floor(canvas.width / gridSize)) {
-                    const topDot = gridDots[i - Math.floor(canvas.width / gridSize)];
-                    if (topDot) {
-                        ctx.beginPath();
-                        ctx.moveTo(dot.x, dot.y);
-                        ctx.lineTo(topDot.x, topDot.y);
-                        ctx.stroke();
-                    }
-                }
-            });
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
         }
 
         function animate() {
-            ctx.fillStyle = '#050505';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            drawGrid(time);
+            particles.forEach((particle, i) => {
+                particle.update();
+                particle.draw();
 
-            waves.forEach(wave => wave.draw(time));
+                particles.slice(i + 1).forEach(otherParticle => {
+                    const dx = particle.x - otherParticle.x;
+                    const dy = particle.y - otherParticle.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-            time++;
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(79, 172, 254, ${0.2 - dist / 500})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(otherParticle.x, otherParticle.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
             requestAnimationFrame(animate);
         }
 
@@ -837,6 +180,7 @@
             canvas.height = window.innerHeight;
         });
 
+        // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -846,6 +190,7 @@
             }
         });
 
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -854,9 +199,10 @@
             });
         });
 
+        // Intersection Observer for service cards
         const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -80px 0px'
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -864,7 +210,7 @@
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('animate');
-                    }, index * 80);
+                    }, index * 100);
                     observer.unobserve(entry.target);
                 }
             });
@@ -874,30 +220,97 @@
             observer.observe(card);
         });
 
-        document.querySelector('.contact-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for reaching out! I will get back to you soon.');
-            e.target.reset();
+        // Form submission with Formspree and custom success message
+document.querySelector('.contact-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const form = e.target;
+    const button = form.querySelector('button');
+    const originalText = button.textContent;
+    
+    // Remove any existing messages
+    const existingMessage = form.querySelector('.form-message');
+    if (existingMessage) existingMessage.remove();
+    
+    button.textContent = 'Sending...';
+    button.disabled = true;
+    
+    try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
         });
+        
+        if (response.ok) {
+            // Create success message
+            const message = document.createElement('div');
+            message.className = 'form-message success';
+            message.innerHTML = '✅ Thank you! Your message has been sent successfully. I will get back to you soon.';
+            form.insertBefore(message, form.firstChild);
+            form.reset();
+            
+            // Remove message after 5 seconds
+            setTimeout(() => message.remove(), 5000);
+        } else {
+            const data = await response.json();
+            // Create error message
+            const message = document.createElement('div');
+            message.className = 'form-message error';
+            message.innerHTML = '❌ Oops! ' + (data.error || 'Something went wrong. Please try again.');
+            form.insertBefore(message, form.firstChild);
+            
+            setTimeout(() => message.remove(), 5000);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        // Create error message
+        const message = document.createElement('div');
+        message.className = 'form-message error';
+        message.innerHTML = '❌ Network error. Please check your internet connection and try again.';
+        form.insertBefore(message, form.firstChild);
+        
+        setTimeout(() => message.remove(), 5000);
+    }
+    
+    button.textContent = originalText;
+    button.disabled = false;
+});
 
+        // Mouse trail effect
         let mouseX = 0, mouseY = 0;
-        let currentX = 0, currentY = 0;
+        let trailX = 0, trailY = 0;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
-        function updateCursor() {
-            const dx = mouseX - currentX;
-            const dy = mouseY - currentY;
-            
-            currentX += dx * 0.15;
-            currentY += dy * 0.15;
+        function drawTrail() {
+            trailX += (mouseX - trailX) * 0.1;
+            trailY += (mouseY - trailY) * 0.1;
 
-            const cursor = document.createElement('div');
-            cursor.style.position = 'fixed';
-            cursor.style.left = currentX + 'px';
-            cursor.style.top = currentY + 'px';
-            cursor.style.width = '3px';
-            cursor.style.height = '3px';
+            const trail = document.createElement('div');
+            trail.style.position = 'fixed';
+            trail.style.left = trailX + 'px';
+            trail.style.top = trailY + 'px';
+            trail.style.width = '5px';
+            trail.style.height = '5px';
+            trail.style.borderRadius = '50%';
+            trail.style.background = 'rgba(79, 172, 254, 0.5)';
+            trail.style.pointerEvents = 'none';
+            trail.style.zIndex = '9999';
+            document.body.appendChild(trail);
+
+            setTimeout(() => {
+                trail.remove();
+            }, 1000);
+
+            requestAnimationFrame(drawTrail);
+        }
+
+        drawTrail();
+    </script>
+</body>
+</html>

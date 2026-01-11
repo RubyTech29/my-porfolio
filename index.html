@@ -12,13 +12,25 @@
 
     <nav id="navbar">
         <div class="logo">MET0</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
+        
+        <!-- Hamburger Menu Button (Mobile Only) -->
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- Navigation Menu -->
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#services" class="nav-link">Services</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
+        
+        <!-- Mobile Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
     </nav>
 
     <section id="home">
@@ -311,6 +323,42 @@ document.querySelector('.contact-form').addEventListener('submit', async (e) => 
         }
 
         drawTrail();
+
+        // ========== MOBILE NAVIGATION ==========
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+const navOverlay = document.getElementById('navOverlay');
+const navLinks = document.querySelectorAll('.nav-link');
+
+// Toggle Mobile Menu
+function toggleMobileMenu() {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    navOverlay.classList.toggle('active');
+    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+}
+
+// Open/Close menu when hamburger is clicked
+hamburger.addEventListener('click', toggleMobileMenu);
+
+// Close menu when overlay is clicked
+navOverlay.addEventListener('click', toggleMobileMenu);
+
+// Close menu when a nav link is clicked
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        if (navMenu.classList.contains('active')) {
+            toggleMobileMenu();
+        }
+    });
+});
+
+// Close menu when pressing ESC key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
+});
     </script>
 </body>
 </html>
